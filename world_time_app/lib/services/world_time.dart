@@ -10,22 +10,25 @@ class WorldTime {
 
   WorldTime ({required this.location, required this.flag, required this.url});
 
-  Future<void> getTime() async {
 
-    var address =  Uri.https('worldtimeapi.org', '/api/timezone/$url');
+  Future<void> getTime() async {
+    
+    try {
+
+    var address = Uri.https('worldtimeapi.org', '/api/timezones/$url');
 
     Response response = await get(address);
     Map data = jsonDecode(response.body);
 
-  //   if (response.statusCode == 200) {
-  //   Map data = jsonDecode(response.body);
-  //   print(data);
-  // } else {
-  //   print('Request failed with status: ${response.statusCode}.');
-  // }
+    //   if (response.statusCode == 200) {
+    //   Map data = jsonDecode(response.body);
+    //   print(data);
+    // } else {
+    //   print('Request failed with status: ${response.statusCode}.');
+    // }
 
     String datetime = data['datetime'];
-    String offset = data['utc_offset'].substring(1,3);
+    String offset = data['utc_offset'].substring(1, 3);
     // print(datetime);
     // print(offset);
 
@@ -34,6 +37,12 @@ class WorldTime {
     // print(now);
     time = now.toString();
 
-}
+    }
+    catch (e) {
+      time = 'could not get time data';
+    }
+
+    
+  }
 
 }
