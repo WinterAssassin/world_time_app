@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:world_time_app/services/world_time.dart';
 
 class ChooseLocation extends StatefulWidget {
-  const ChooseLocation({super.key});
+  const ChooseLocation({Key? key}) : super(key:key);
 
   @override
   State<ChooseLocation> createState() => _ChooseLocationState();
@@ -26,14 +26,14 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTime instance = locations[index];
     await instance.getTime();
     
-    // ignore: use_build_context_synchronously
-    if (!context.mounted) return;
+    if (mounted) {
     Navigator.pop(context, {
       'location' : instance.location,
       'flag' : instance.flag,
       'time' : instance.time,
       'isDaytime' : instance.isDaytime
     });
+    }
   }
 
 
